@@ -7,6 +7,7 @@ target 'XKCDPractice' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxAlamofire'
+  pod 'Kingfisher'
   # Pods for XKCDPractice
 
   target 'XKCDPracticeTests' do
