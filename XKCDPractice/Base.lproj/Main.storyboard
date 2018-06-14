@@ -61,6 +61,13 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="IgT-tw-2ul"/>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="IZH-Xx-Zh7" id="0Lr-vt-VAN"/>
+                        <outlet property="comicView" destination="vdU-Zr-s04" id="LJr-G7-0gf"/>
+                        <outlet property="downLabel" destination="OEB-SO-45m" id="eZR-Tu-hh8"/>
+                        <outlet property="nextButton" destination="03t-bz-GOp" id="vfJ-gi-dMd"/>
+                        <outlet property="topLabel" destination="WKf-BC-8fT" id="9Vy-kt-tRY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
