@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class ComicViewController: UIViewController {
     @IBOutlet weak var comicView: UIImageView!
@@ -24,8 +25,22 @@ class ComicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.title.asDriver().drive(self.topLabel.rx.text).disposed(by: dispose)
-        //viewModel.imageUrl.asDriver().drive(onNext:{[weak self](url) in
-        })
+        viewModel.imageUrl.asDriver().drive(onNext:{[weak self](url) in
+            self?.comicView.kf.setImage(with: url)
+        }).disposed(by: dispose)
+        viewModel.date.asDriver().drive(self.downLabel.rx.text).disposed(by: dispose)
+        viewModel.isNextEnabled.drive(nextButton.rx.isEnabled).disposed(by: dispose)
+        viewModel.isPreviousEnabled.drive(backButton.rx.isEnabled).disposed(by: dispose)
+        
+        nextButton.rx.tap.asDriver().drive(onNext:{
+            self.viewModel.getNextComic()
+        }).disposed(by: dispose)
+        
+        backButton.rx.tap.asDriver().drive(onNext:{
+            self.viewModel.getPreviousComic()
+        }).disposed(by: dispose)
+        
+        viewModel.getLatestComic()
     }
     
 }
