@@ -27,7 +27,7 @@ struct Comic {
         self.date = dict["date"] as? Date
         
         guard let year = self.year, let month = self.month, let day = self.day else {
-            NSLog("Could not sub %@ / %@ / %@", self.year! as NSString, self.month! as NSString, self.day! as NSString)
+            //NSLog("Could not sub %@ / %@ / %@", self.year! as NSString, self.month! as NSString, self.day! as NSString)
             return
         }
         
