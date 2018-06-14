@@ -8,9 +8,8 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
 import RxAlamofire
-import Alamofire
+
 
 struct ComicService {
     let latestURL = "https://xkcd.com/info.0.json"
@@ -33,6 +32,6 @@ struct ComicService {
     
     func getComic(page: Int) -> Observable<Comic?>{
         return  RxAlamofire.requestJSON(.get, comicURL(page))
-            .map{_, json in comicFromJson(json: json)}
+            .map{_, json in self.comicFromJson(json: json)}
     }
 }
