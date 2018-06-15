@@ -40,7 +40,7 @@ class ComicViewModel {
             guard let latestNum = latestNum, let currentNum = current?.num else {return false}
             return latestNum != currentNum
         }).distinctUntilChanged()
-        
+    
 //       前のページがあるか
         isPreviousEnabled = currentComic.asDriver().map({
             (comic)-> Bool in
@@ -54,8 +54,15 @@ class ComicViewModel {
         self.service.getLatestComic().subscribe(onNext: {(comic) in
             guard let comic = comic else {return}
             self.latestComicNum.value = comic.num
-            
-            self.latestComicNum.value = comic.num
+            self.currentComic.value?.num = comic.num
+            self.updateViewModel(comic: comic)
+        }).disposed(by: dispose)
+    }
+    
+    func getFirstComic(){
+        self.service.getComic(page: 1).subscribe(onNext: { (comic) in
+            guard let comic = comic else {return}
+            self.currentComic.value?.num = comic.num
             self.updateViewModel(comic: comic)
         }).disposed(by: dispose)
     }
@@ -85,7 +92,7 @@ class ComicViewModel {
 //    viewに通知
     private func updateViewModel(comic: Comic){//データを代入してviewに通知する
         self.currentComic.value = comic
-        self.title.value = comic.title ?? ""
+        self.title.value = (comic.title ?? "") + "  date:" + (String(comic.num!))
         
         if let urlString = comic.img, let url = URL(string: urlString){
             self.imageUrl.value = url

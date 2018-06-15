@@ -31,6 +31,7 @@ struct ComicService {
     }
     
     func getComic(page: Int) -> Observable<Comic?>{
+        print(comicURL(page))
         return  RxAlamofire.requestJSON(.get, comicURL(page))
             .map{_, json in self.comicFromJson(json: json)}
     }
