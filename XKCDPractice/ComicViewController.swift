@@ -18,15 +18,23 @@ class ComicViewController: UIViewController {
     @IBOutlet weak var downLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backRootView: UIView!
+    @IBOutlet weak var comicRootView: UIView!
     
     var viewModel = ComicViewModel()
     var dispose = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let blView = blurEffectView(fromBlurStyle:.light, frame: self.backImageView.frame)
+        self.backRootView.addSubview(blView)
+        
         viewModel.title.asDriver().drive(self.topLabel.rx.text).disposed(by: dispose)
         viewModel.imageUrl.asDriver().drive(onNext:{[weak self](url) in
             self?.comicView.kf.setImage(with: url)
+            self?.backImageView.image = self?.comicView.image
+            print(url)
         }).disposed(by: dispose)
         viewModel.date.asDriver().drive(self.downLabel.rx.text).disposed(by: dispose)
         viewModel.isNextEnabled.drive(nextButton.rx.isEnabled).disposed(by: dispose)
@@ -41,6 +49,15 @@ class ComicViewController: UIViewController {
         }).disposed(by: dispose)
         
         viewModel.getLatestComic()
+        viewModel.getFirstComic()
+        
+        
     }
     
+    func blurEffectView(fromBlurStyle style: UIBlurEffectStyle, frame: CGRect) -> UIVisualEffectView {
+        let effect = UIBlurEffect(style: style)
+        let blurView = UIVisualEffectView(effect: effect)
+        blurView.frame = frame
+        return blurView
+    }
 }
