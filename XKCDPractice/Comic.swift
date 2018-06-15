@@ -24,7 +24,9 @@ struct Comic {
         self.img = dict["img"] as? String
         self.title = dict["title"] as? String
         self.alt = dict["alt"] as? String
-        self.date = dict["date"] as? Date
+        self.year = dict["year"] as? String
+        self.month = dict["month"] as? String
+        self.day = dict["day"] as? String
         
         guard let year = self.year, let month = self.month, let day = self.day else {
             //NSLog("Could not sub %@ / %@ / %@", self.year! as NSString, self.month! as NSString, self.day! as NSString)
